@@ -5,15 +5,44 @@
     <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
   </head>
+
+  <header>
+      <h1 class="text-center">CO2 comparator</h1>
+      <h2 class="text-center"> an Angular app </h2>
+    </header>
+
   <body ng-controller="StoreController as store">
 
- 
+ <section class="tab" ng-controller='TabController as tab'>
+        <ul class="nav nav-pills" >
+          <li ng-class="{active: tab.isSet(1)}">
+            <a href ng-click="tab.setTab(1)">Classement General</a></li>
+          <li ng-class="{active: tab.isSet(2)}">
+            <a href ng-click="tab.setTab(2)">Recherche</a></li>
+          <li ng-class="{active: tab.isSet(3)}">
+            <a href ng-click="tab.setTab(3)">Voyage</a></li>
+        </ul>
   
-<div class="list-group-item" ng-repeat="product in store.products">
+		<div ng-show="tab.isSet(1)">
+          <h4>Classement General</h4>
+          <div class="list-group-item" ng-repeat="product in store.products | orderBy:'fields.co2_g_km' |  ">
       
       
-{{product.fields.modele_dossier}}
+<td>{{product.fields.modele_dossier}}</td> <td>{{product.fields.carburant}}</td> <td>{{product.fields.co2_g_km}}</td>
       
     </div>
+        </div>
+        <div ng-show="tab.isSet(2)">
+          <h4>Recherche</h4>
+          <blockquote>Shine: {{product.shine}}</blockquote>
+        </div>
+        <div ng-show="tab.isSet(3)">
+          <h4>Voyage</h4>
+          <blockquote></blockquote>
+        </div>
+      </section>
+
+
+
   </body>
 </html>
